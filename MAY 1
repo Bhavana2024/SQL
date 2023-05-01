@@ -1,0 +1,51 @@
+create database exercise;
+create table customerss(id int primary key,name_ varchar(20),city varchar(25),salesman_id int ,grade int);
+select * from customerss;
+
+insert into customerss value (101,"bhanu","hyderabad",215,123),
+(102,"sunny","bangalore",216,198),
+(103,"chandu","kurnool",217,214),
+(104,"indu","kadapa",218,150),
+(105,"preethi","kadapa",219,180);
+  
+ 
+ -- write a sql to find out the details of the customer whose grade are above 100?
+ 
+ select * from customerss where grade >=150;
+ 
+ -- write an sql query to find out the details of the customerswho are livinging in kadapa and grade <= 150;
+ 
+ select * from customerss where city = "kadapa" and grade <=150;
+ 
+ -- write a sql quary to find out name of the customer who are from hyderabad city or grade >=90.
+ 
+ select * from customerss where city = "hyderabad" or grade >=90;
+ 
+ -- write an sql quary to find customer detailswho are either from kadapa city or whom do not have a grade more than 150.
+ 
+ select * from customerss where city = "kadapa" or not grade>150 ;
+ 
+ -- write an sql quary to identify the customer who do not belong to the city bangalore or have a grade that exceeds 200.
+ select * from customerss where not city = "bangalore" or grade>200; -- print the information relate to both conditions.
+ 
+  select * from customerss where not city = "bangalore" and grade>200;
+  
+  -- we have to find the order details excluding the date 30-04-2023 and salesman_id more than 150 or purchas eamount greater than 1000.
+create table orders(
+order_num int,purchase_amount int,order_date date,customer_id int,salesman_id int
+);
+insert into orders values(2002,1000,'2023-04-23',100,200),(2003,1100,'2023-04-25',101,201),(2003,1200,'2023-04-30',102,202),(2004,1250,'2023-04-28',106,209),(2005,1000,'2023-05-22',105,204);
+
+select * from orders;
+
+create table salesman(
+salesman_id int primary key, name_ varchar(30),city varchar(30),commissiom float);
+
+select * from salesman;
+insert into salesman values(200,"indu","kadapa",0.45),(201,"chandu","kurnool",0.57),(203,"bunny","anantapur",0.95),(204,"ram","vijag",0.48);
+-- to write down sales man details whose commisions are within the range from 0.23 to 0.45
+select * from salesman where commissiom  between 0.23 and 0.45;
+
+-- find the salesman details whose name start with i letter
+ select * from salesman where name_ like 'i%';
+ 
