@@ -1,0 +1,82 @@
+create table car(
+car_no int,car_name varchar(40),car_price int,car_quantity int);
+insert into car values (112,'tesla',120000,2),(113,'bmw',230000,3),(114,'audi',250000,4);
+insert into car values(116,'tata',120000,5),(119,'kia',230000,4);
+select *from car;
+select count(car_name),car_price from car group by car_price;
+select count(car_name) as count_number,car_price from car group by car_price;
+
+
+create table visit(
+entry_date date, price int, duriation int);
+insert into visit values('2023-5-1',1000,20),('2023-5-1',2000,30),('2023-6-20',3000,45),('2023-6-20',4000,60),('2023-7-10',5000,80),('2023-5-1',7000,50);
+ 
+ select * from visit;
+ select entery_data,count(*) from visit group by entery_date;
+ 
+ -- extract keyword examples.
+ 
+select extract(year from entry_date) as year,
+extract(month from entry_date)as month,
+extract(day from entry_date) as day, 
+round(avg(price),3) from visit 
+group by extract(year from entry_date),extract(month from entry_date),
+extract(day from entry_date)
+order by extract(year from entry_date),extract(month from entry_date);
+select * from visit;
+ --   round fun to show upto 5 decimals
+
+  -- round(avg(price),5)
+   select entry_date,round(avg(price),3) as average_price from visit group by entry_date having count(*)>1 order by entry_date;
+  ;
+	select entry_date,round(avg(price),3) as average_price from visit group by entry_date having count(*)>3 order by entry_date;
+-- it shows empty data for >3 alter.
+select entry_date, round(avg(price),3) as average_price from visit where duriation >30
+  group by entry_date having count(*)>1 order by entry_date;
+
+select * from customers;
+
+select city,count(*) as couster_city from customers group by city;
+  
+create table employee(
+emp_id int,name_ varchar(30),age int,country varchar(30)
+);
+insert into employee values(100,'bhavana',21,'india'),
+(101,'samrin',23,'america'),
+(102,'yamuna',39,'america'),
+(103,'swathi',40,'pakistan'),
+(104,'sunanda',15,'india');
+
+select * from employee;
+
+select count(country),country from employee group by country having count(country)>=2;
+  
+select country,count(country) from employee group by country having max(age) > 30;
+
+create table manager(
+id int, name varchar(30), age int,gender varchar(20),salary int);
+insert into manager values(101,"bhavana",21,'f',100000),
+(102,'divya',21,'f',100000),
+(103,'surya',23,'m',80000),
+(104,'kiran',21,'m',100000),
+(105,'abhi',25,'m',120000);
+
+select * from manager;
+ 
+select gender,sum(salary) as total_salary from  manager group by gender having sum(salary) > 100000 order by gender; 
+
+select age from manager group by age having count(age)> 2; -- out put = 21.alter
+
+ select gender,max(salary) as maximum_salary from manager group by gender having max(salary)>100000; -- output = m 120000.
+ 
+delimiter //
+create procedure GetManagerInfo()
+begin 
+select * from manager  where age>23; 
+ end //
+ 
+call GetManagerInfo();
+ 
+select name from manager order by rand() limit 1; -- by this the output will give a random name every time u execute this.
+ 
+ 
