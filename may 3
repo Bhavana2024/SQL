@@ -1,0 +1,98 @@
+select * from manager;
+-- finding the 2nd largest salary from manager table
+select name,salary from manager order by salary desc limit 1,1; 
+
+-- finding the 3rd largest salary from manager table
+select name,salary from manager order by salary desc limit 2,1; 
+
+-- finding the 4th largest salary from manager table
+select name,salary from manager order by salary desc limit 3,1; 
+
+-- JOINTS
+create table orders(
+id int primary key not null,order_date date, customer_id int);
+create table customer1(
+cust_id int primary key,cust_name varchar(30),contact_name varchar(30),country varchar(30));
+
+insert into order1 values(10,'2023-05-01',20019),(11,'2023-05-01',20020),(12,'2023-05-03',20020),(13,'2023-05-04',20025),(14,'2023-05-06',20031),(15,'2023-05-06',20032);
+
+insert into customer1 values
+(10,"zara",'hari','india'),
+(11,'jhon','jack','us'),
+(12,'jasmine','ali','iran'),
+(13,'indu','srihan','india'),
+(14,'chandu','subhan','pakistan'),
+(15,'ram','srinivas','srilanka');
+-- join both of them
+select order1.id,customer1.cust_name,order1.order_date from order1
+inner join customer1 on order1.id=customer1.cust_id;
+
+create table staff(
+id int primary key not null,name varchar(30),age int,package int);
+
+create table payment(
+id int primary key not null,da_te date,staff_id int,amount int);
+
+insert into staff values
+(201,'hari',21,20000),
+(202,'swapna',21,25000),
+(203,'vishnu',25,15000),
+(204,'venu',23,200000),
+(205,'sri',22,300000);
+
+insert into payment values
+(301,'2023-04-30',201,10000),
+(302,'2023-05-01',202,20000),
+(303,'2023-05-01',203,15000),
+(304,'2023-05-01',204,25000),
+(305,'2023-05-01',205,20000);
+
+select * from staff;
+select * from payment;
+
+select s.id,name,age,amount from staff s,payment p where s.id=p.staff_id;
+-- another method:
+SELECT STAFF.ID,NAME,AGE,AMOUNT FROM STAFF,PAYMENT WHERE STAFF.ID=PAYMENT.STAFF_ID;
+
+alter table order1 add shipping_id int;
+
+select * from order1;
+update  order1 set shipping_id = 1234 where id = 5;
+update  order1 set shipping_id = 8888 where id = 1;
+update  order1 set shipping_id = 1267 where id = 2;
+update  order1 set shipping_id = 1278 where id = 3;
+update  order1 set shipping_id = 2356 where id = 4;
+
+create table shipping(
+shipping_id int,name varchar(30));
+insert into shipping values(1234,'xxx'),(8888,'express'),(1267,'xxx'),(1278,'abcd'),(2356,'sss');
+select * from order1;
+select * from shipping;
+select * from customer1;
+
+-- joining three tables
+select order1.id,customer1.cust_name,shipping.name from
+((order1 inner join customer1 on order1.id = customer1.cust_id)
+inner join shipping on order1.shipping_id = shipping.shipping_id); -- insert information of id,order_date,customer_id shipping_id.
+   -- left join of order1 and customer1 tables
+   
+select customer1.cust_name,order1.id from customer1
+left join order1 on customer1.cust_id = order1.customer_id;
+
+select customer1.cust_name,order1.id from customer1
+left join order1 on customer1.cust_id = order1.customer_id order by cust_name;
+
+select customer1.cust_name,order1.id from customer1
+left join order1 on customer1.cust_id = order1.customer_id where customer1.cust_name like 'j%' order by customer1.cust_name;
+
+-- right join
+
+select cust_name,country,order_date from customer1 right join order1 on customer1.cust_id = order1.customer_id;
+-- full join
+select cust_name,order1.id from customer1 full join order1 on cust_id = order1.customer_id;
+
+create table test(
+id int primary key not null,
+c2 varchar(30) not null,
+c3 varchar(20) not null,
+c3 varchar(40) default 'software enginner');
